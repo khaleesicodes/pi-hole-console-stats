@@ -57,3 +57,5 @@ while True:
     print(" ")
     print(" ")
     print_table(pi_hole_stats_data, "pi_hole_stats")
+
+    time.sleep(7)
