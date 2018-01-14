@@ -29,12 +29,16 @@ while True:
     Disk = subprocess.check_output(cmd, shell=True)
 
     # Pi Hole data!
-
-    r = requests.get(api_url)
-    data = json.loads(r.text)
-    DOMAINS = data['unique_domains']
-    ADS_BLOCKED = data['ads_blocked_today']
-    CLIENTS = data['unique_clients']
+    try:
+        r = requests.get(api_url)
+        data = json.loads(r.text)
+        DOMAINS = data['unique_domains']
+        ADS_BLOCKED = data['ads_blocked_today']
+        CLIENTS = data['unique_clients']
+    except:
+        # wait 7seconds before try again
+        time.sleep(7)
+        continue
 
     pi_stats_data = [
         ['IP Address', IP.strip()],
