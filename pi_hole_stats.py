@@ -7,9 +7,16 @@ import os
 
 api_url = 'http://localhost/admin/api.php'
 
+def print_table(data, title):
+    table = AsciiTable(data)
+    table.inner_heading_row_border = False
+    table.inner_row_border = True
+    table.title = title
+    print(table.table)
+
 while True:
 
-# Shell scripts for system monitoring from here : https://unix.stackexchange.com/questions/119126/command-to-disp$
+    # Shell scripts for system monitoring from here : https://unix.stackexchange.com/questions/119126/command-to-disp$
     cmd = "hostname -I | cut -d\' \' -f1"
     IP = subprocess.check_output(cmd, shell=True)
     cmd = "hostname"
@@ -21,7 +28,7 @@ while True:
     cmd = "df -h | awk '$NF==\"/\"{printf \"%d/%dGB %s\", $3,$2,$5}'"
     Disk = subprocess.check_output(cmd, shell=True)
 
-# Pi Hole data!
+    # Pi Hole data!
 
     r = requests.get(api_url)
     data = json.loads(r.text)
@@ -42,14 +49,6 @@ while True:
         ['Clients', CLIENTS],
         ['Domains', DOMAINS]
     ]
-
-
-    def print_table(data, title):
-        table = AsciiTable(data)
-        table.inner_heading_row_border = False
-        table.inner_row_border = True
-        table.title = title
-        print(table.table)
 
     # clear screen
     os.system('clear')
