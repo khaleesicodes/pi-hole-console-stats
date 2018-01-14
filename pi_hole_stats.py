@@ -3,6 +3,7 @@ import subprocess
 import time
 import json
 import requests
+import os
 
 api_url = 'http://localhost/admin/api.php'
 
@@ -50,6 +51,8 @@ while True:
         table.title = title
         print(table.table)
 
+    # clear screen
+    os.system('clear')
 
     print_table(pi_stats_data, "rasberry_pi_stats")
     print(" ")
