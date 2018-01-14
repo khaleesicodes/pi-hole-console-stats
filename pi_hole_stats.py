@@ -19,11 +19,11 @@ ADS_BLOCKED = "1000"
 
 
 pi_stats_data = [
-    ['IP Address', IP],
+    ['IP Address', IP.strip()],
     ['CPU Load', CPU],
     ['Memory', MemUsage],
     ['Disk', Disk],
-    ['Host', HOST]
+    ['Host', HOST.strip()]
 ]
 
 pi_hole_stats_data = [
