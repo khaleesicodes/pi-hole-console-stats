@@ -1,5 +1,10 @@
 from terminaltables import AsciiTable
 import subprocess
+import time
+import json
+import requests
+
+api_url = 'http://localhost/admin/api.php'
 
 # Shell scripts for system monitoring from here : https://unix.stackexchange.com/questions/119126/command-to-disp$
 cmd = "hostname -I | cut -d\' \' -f1"
@@ -13,10 +18,13 @@ MemUsage = subprocess.check_output(cmd, shell=True)
 cmd = "df -h | awk '$NF==\"/\"{printf \"%d/%dGB %s\", $3,$2,$5}'"
 Disk = subprocess.check_output(cmd, shell=True)
 
+# Pi Hole data!
 
-# fake Test Data
-ADS_BLOCKED = "1000"
-
+r = requests.get(api_url)
+data = json.loads(r.text)
+DOMAINS = data['unique_domains']
+ADS_BLOCKED = data['ads_blocked_today']
+CLIENTS = data['unique_clients']
 
 pi_stats_data = [
     ['IP Address', IP.strip()],
@@ -27,7 +35,9 @@ pi_stats_data = [
 ]
 
 pi_hole_stats_data = [
-    ['Ads_blocked', ADS_BLOCKED]
+    ['Ads_blocked', ADS_BLOCKED],
+    ['Clients', CLIENTS],
+    ['Domains', DOMAINS]
 ]
 
 
